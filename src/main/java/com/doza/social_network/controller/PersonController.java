@@ -1,12 +1,9 @@
 package com.doza.social_network.controller;
 
-import com.doza.social_network.generator.GeneratorPerson;
 import com.doza.social_network.model.Person;
 import com.doza.social_network.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,8 +23,23 @@ public class PersonController {
         return personService.getAllPersons();
     }
 
-    @GetMapping("/generatePersons")
-    public void generatePersons() {
-        generatorPerson.createMillionUsers();
+    @GetMapping("/findPerson/{id}")
+    public Person getPersonById(@PathVariable Long id) {
+        return personService.findPersonById(id);
+    }
+
+    @PostMapping("/save")
+    public Person savePerson(@RequestBody Person person) {
+        return personService.save(person);
+    }
+
+    @PostMapping("/update/{id}")
+    public Person updatePerson(@PathVariable Long id, @RequestBody Person person) {
+        return personService.update(person);
+    }
+
+    @GetMapping("/delete/{id}")
+    public void deletePersonById(@PathVariable Long id) {
+        personService.deletePersonById(id);
     }
 }
